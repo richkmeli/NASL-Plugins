@@ -1,19 +1,19 @@
 
 if(description)	{
-	script_name(english:"Forging Packet UDP, malformed ");
-	script_summary(english:"using a bug in apache, executes code remotely");
+	script_name(english:"Forging Packet UDP, malformed DNS");
+	script_summary(english:"Sends malformed UDP packets to DNS service");
 	script_category(ACT_DESTRUCTIVE_ATTACK);
 	script_copyright(english:"This script was written by Riccardo Melioli");
 	exit(0);
 }
 
-# COSTANTI
+# Constants
 sport = 62000;
 dport = 53;
-src ="1.2.3.4";
-data = string("MALFORMED...");
+src = get_host_ip();
+data = string("MALFORMED DNS DATA");
 
-# creazione pacchetto ip
+# Create IP packet
 ip = forge_ip_packet(ip_v : 4,
 			 ip_hl : 5,
 		     ip_tos : 0,
@@ -22,16 +22,14 @@ ip = forge_ip_packet(ip_v : 4,
 		     ip_ttl : 64
 );
 
-
-# creazione pacchetto UDP
+# Create UDP packet
 udp = forge_udp_packet(ip: ip,
 		       uh_sport : sport,
 		       uh_dport : dport,
 			   data : data
 );
 
-
-# invia i pacchetti UDP 500 volte
+# Send UDP packets 500 times
 start_denial();
 send_packet(udp) x 500;
 alive = end_denial();

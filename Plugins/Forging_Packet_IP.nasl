@@ -7,10 +7,10 @@ if(description)	{
 	exit(0);
 }
 
-src ="1.2.3.4";
-data = string("Hi Richk");
+src = get_host_ip();
+data = string("Test packet data");
 
-# creazione pacchetto ip
+# Create IP packet
 ip = forge_ip_packet(ip_v : 4,
 			 ip_hl : 5,
 		     ip_tos : 0,

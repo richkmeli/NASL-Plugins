@@ -4,7 +4,7 @@ if(description)	{
 	script_summary(english:"connects on remote tcp port 21");
 	script_category(ACT_GATHER_INFO);
 	script_copyright(english:"This script was written by Riccardo Melioli");
-	// find_service per trovare il servizio FTP su eventuali altre porte
+	# find_service to find FTP service on other ports
 	script_dependencies("find_service.nes");
 	script_require_ports("Services/ftp", 21);
 	exit(0);
@@ -13,9 +13,9 @@ if(description)	{
 include("audit.inc");
 include("ftp_func.inc");
 
-// Richiediamo al Knowledge Base la porta del servizio FTP
+# Get FTP service port from Knowledge Base
 port = get_kb_item("Services/ftp");
-// Se non è stata ancora rilevata da altri plugin testiamo il default
+# If not detected by other plugins, test default port
 if(!port){	
 	port = 21;
 }
@@ -33,9 +33,9 @@ if(soc)	{
 		display("\n");
 	}
 
-	// HIGH LEVEL FUNCTION - Log in come utente anonimo
-	if(ftp_authenticate(socket:soc, user:"ftp", pass:"richk")){	
-		display("Autentication as anonymous user \n");
+	# HIGH LEVEL FUNCTION - Login as anonymous user
+	if(ftp_authenticate(socket:soc, user:"anonymous", pass:"test@example.com")){	
+		display("Authentication as anonymous user successful\n");
 	}
 	
 	close(soc);

